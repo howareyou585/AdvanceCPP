@@ -1,0 +1,14 @@
+/Delegation/.vs/Delegation/v15/*.suo
+/Delegation/.vs/Delegation/v15/*.db
+/Delegation/.vs/Delegation/v15/ipch/*.ipch
+*.ipch
+*.log
+*.opendb
+*.pdb
+*.tlog
+*.exe
+*.user
+*.filters
+*.ilk
+*.obj
+*.idb
