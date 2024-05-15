@@ -1,37 +1,32 @@
-﻿// Delegation.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+﻿// FuncPointerAdvance.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-
 #include <iostream>
-#include "DelegationBaseVersion.h"
-#include "DelegationPolymorphicVersion.h"
-#include <memory>
-
-
-
+using namespace std;
+void normalFunc()
+{
+	cout << "normalFunc" << endl;
+}
+class A
+{
+public:
+	void memberFunc() { cout << "memberFunc" << endl; }
+	static void memberFunc_s() { cout << "memberFunc_s" << endl; }
+};
 int main()
 {
     std::cout << "Hello World!\n"; 
-	//基本版
-	/*BaseB baseB;
-	BaseA baseA;
-	baseB.m_ptra =&baseA;
-	baseB.OnEvent(12);*/
-
-	//多态版
-	/*auto ptrEventA = make_shared<EventCallA>();
-	auto ptrEventB = make_shared <EventCallB>();
-	auto ptrEventSystem = make_shared<EventCallSystem>();
-	ptrEventSystem->m_ptrSystem = new System();
-	Receiver r;
-	r.AddEventCaller(ptrEventA.get());
-	r.AddEventCaller(ptrEventB.get());
-	r.AddEventCaller(ptrEventSystem.get());
-	
-	r.OnEvent(12);*/
-
-
-	
+	// 普通函数指针的用法
+	typedef void(*ptrFunc)();
+	ptrFunc pfunc = normalFunc;
+	pfunc();
+	pfunc = A::memberFunc_s;
+	pfunc();
+	//类成员函数指针的用法
+	typedef void(A::*ptrMemFunc)();
+	ptrMemFunc pMemFunc = &A::memberFunc;
+	A a;
+	(a.*pMemFunc)();
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
