@@ -39,3 +39,11 @@ void EventCallB::Do(int eventId)
 {
 	printf("EventCallerB do event %d.\r\n", eventId);
 }
+
+void EventCallSystem::Do(int eventId)
+{
+	if (m_ptrSystem)
+	{
+		m_ptrSystem->Maximize();
+	}
+}

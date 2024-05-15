@@ -18,11 +18,20 @@ int main()
 	//多态版
 	auto ptrEventA = make_shared<EventCallA>();
 	auto ptrEventB = make_shared <EventCallB>();
+	auto ptrEventSystem = make_shared<EventCallSystem>();
+	ptrEventSystem->m_ptrSystem = new System();
 	Receiver r;
 	r.AddEventCaller(ptrEventA.get());
 	r.AddEventCaller(ptrEventB.get());
+	r.AddEventCaller(ptrEventSystem.get());
+	
 	r.OnEvent(12);
 
+
+	/*typedef void (Receiver::*my_memuber_func)(int);
+	my_memuber_func myfunc = &Receiver::OnEvent;
+	(r.*myfunc)(20);*/
+	
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

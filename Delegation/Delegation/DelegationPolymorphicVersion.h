@@ -28,3 +28,16 @@ private:
 	list<EventCallBase *>  m_lstCaller;
 };
 
+//system 是一个第三方提供的类
+class System
+{
+public:
+	void Maximize(void) { printf("Window is maximized.\r\n"); }
+};
+class EventCallSystem :public EventCallBase
+{
+public:
+	virtual void Do(int eventId) override;
+public:
+	System* m_ptrSystem;
+};
