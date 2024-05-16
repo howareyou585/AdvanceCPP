@@ -5,10 +5,14 @@
 #include <iostream>
 #include "DelegationBaseVersion.h"
 #include "DelegationPolymorphicVersion.h"
+#include "DelegationNoParameter.h"
 #include <memory>
 
 
-
+void say()
+{
+	cout << "你好" << endl;
+}
 int main()
 {
     std::cout << "Hello World!\n"; 
@@ -30,8 +34,12 @@ int main()
 	
 	r.OnEvent(12);*/
 
+	auto ptrDelegate = createDelegate(say);
+	ptrDelegate->invoke();
+	MyA *ptrA = new MyA();
 
-	
+	ptrDelegate = createDelegate(ptrA, &MyA::say);
+	ptrDelegate->invoke();
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
