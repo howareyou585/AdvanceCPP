@@ -33,13 +33,16 @@ int main()
 	r.AddEventCaller(ptrEventSystem.get());
 	
 	r.OnEvent(12);*/
-
+	CMultiDelegate onclick;
 	auto ptrDelegate = createDelegate(say);
-	ptrDelegate->invoke();
+	onclick += ptrDelegate;
 	MyA *ptrA = new MyA();
 
-	ptrDelegate = createDelegate(ptrA, &MyA::say);
-	ptrDelegate->invoke();
+	auto ptrDelegate2 = createDelegate(ptrA, &MyA::say);
+	onclick += ptrDelegate2;
+	//md.operator+=(ptrDelegate);
+	//md.operator+=(ptrDelegate2);
+	onclick();
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

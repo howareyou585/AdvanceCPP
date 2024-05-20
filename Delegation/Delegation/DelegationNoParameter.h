@@ -1,4 +1,6 @@
 #pragma once
+#include <list>
+using namespace std;
 class IDelegate
 {
 public:
@@ -38,7 +40,15 @@ private:
 
 };
 
-
+class CMultiDelegate
+{
+public:
+	void operator()();
+	CMultiDelegate& operator+= (IDelegate* ptrDelegate);
+	CMultiDelegate& operator-=(IDelegate* ptrDelegate);
+private:
+	list<IDelegate*>m_lstDelegate;
+};
 
 class MyA
 {
