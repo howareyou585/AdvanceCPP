@@ -6,23 +6,44 @@
 #include "DelegationBaseVersion.h"
 #include "DelegationPolymorphicVersion.h"
 #include "DelegationNoParameter.h"
+#include "DelegationWIthParameter.h"
 #include <memory>
-
 
 void say()
 {
 	cout << "你好" << endl;
 }
+int add(int a, int b)
+{
+	return a + b;
+}
+double max(int a, double b,  float c)
+{
+	double r = 0.0;
+	if(a>=b)
+	{ 
+		r = a;
+	}
+	else
+	{
+		r = b;
+	}
+	if (r < c)
+	{
+		r = c;
+	}
+	return r;
+}
 int main()
 {
     std::cout << "Hello World!\n"; 
-	//基本版
+	//1.基本版
 	/*BaseB baseB;
 	BaseA baseA;
 	baseB.m_ptra =&baseA;
 	baseB.OnEvent(12);*/
 
-	//多态版
+	//2.多态版
 	/*auto ptrEventA = make_shared<EventCallA>();
 	auto ptrEventB = make_shared <EventCallB>();
 	auto ptrEventSystem = make_shared<EventCallSystem>();
@@ -33,16 +54,27 @@ int main()
 	r.AddEventCaller(ptrEventSystem.get());
 	
 	r.OnEvent(12);*/
-	CMultiDelegate onclick;
-	auto ptrDelegate = createDelegate(say);
-	onclick += ptrDelegate;
-	MyA *ptrA = new MyA();
 
-	auto ptrDelegate2 = createDelegate(ptrA, &MyA::say);
-	onclick += ptrDelegate2;
-	//md.operator+=(ptrDelegate);
-	//md.operator+=(ptrDelegate2);
-	onclick();
+	//3.无参数版
+	//CMultiDelegate onclick;
+	//auto ptrDelegate = createDelegate(say);
+	//onclick += ptrDelegate;
+	//MyA *ptrA = new MyA();
+
+	//auto ptrDelegate2 = createDelegate(ptrA, &MyA::say);
+	//onclick += ptrDelegate2;
+	////md.operator+=(ptrDelegate);
+	////md.operator+=(ptrDelegate2);
+	//onclick();
+
+	//4.有参数版
+	
+	CCommonDelegateMultiParameters<int, int, int> c(add);
+	int ret = c.invoke(10,20);
+	cout << "10+20=" << ret << endl;
+	CCommonDelegateMultiParameters<double, int, double, float> d(max);
+	double m = d.invoke(36, 95.5, 100.0f);
+	cout << "max=" << m << endl;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
