@@ -34,6 +34,14 @@ double max(int a, double b,  float c)
 	}
 	return r;
 }
+class MyClass
+{
+public:
+	int add(int a, int b)
+	{
+		return a + b;
+	}
+};
 int main()
 {
     std::cout << "Hello World!\n"; 
@@ -75,6 +83,15 @@ int main()
 	CCommonDelegateMultiParameters<double, int, double, float> d(max);
 	double m = d.invoke(36, 95.5, 100.0f);
 	cout << "max=" << m << endl;
+
+	MyClass mc;
+	//function<int(int, int)> funcx = std::bind(&MyClass::add, &mc, std::placeholders::_1, std::placeholders::_2);
+
+	using memberFuncPointer = int(MyClass::*)(int, int);
+	memberFuncPointer ptrx = &MyClass::add;
+	
+	CMemberFuctionDelegateMultiParameters<int, MyClass, int, int> cc(mc, ptrx);
+	cout << "23+96=" << cc.invoke(23, 96) << endl;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

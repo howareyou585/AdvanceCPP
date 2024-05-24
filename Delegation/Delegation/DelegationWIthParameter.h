@@ -1,5 +1,7 @@
 #pragma once
 #include<functional>
+#include<list>
+using namespace;
 template<typename ReturnType, typename ...paramTypes>
 class IDelegateMultiParameters
 {
@@ -32,3 +34,40 @@ private:
 };
 
 
+template<typename ReturnType, typename ctype, typename ... paramTypes>
+class CMemberFuctionDelegateMultiParameters :
+	public IDelegateMultiParameters< ReturnType, paramTypes...>
+{
+public:
+	using memFuncPtr = ReturnType(ctype::*)(paramTypes...);
+	CMemberFuctionDelegateMultiParameters(ctype& obj, memFuncPtr ptrMemberFunc)
+	{
+		m_object = obj;
+		m_ptrMemFunc = ptrMemberFunc;
+	}
+public:
+	virtual ReturnType invoke(paramTypes ... parameters) override
+	{
+		return (m_object.*m_ptrMemFunc)(parameters...);
+	}
+
+private:
+	ctype m_object;
+	memFuncPtr m_ptrMemFunc ;
+};
+
+template<typename ReturnType, typename ...parameters>
+class CMultiDelegateMultiParameters
+{
+public:
+	 
+	CMultiDelegateMultiParameters& operator+=(IDelegateMultiParameters<ReturnType, parameters...>*ptrIDelegate)
+	{
+		if (ptrIDelegate)
+		{
+			m_list.emplace_back(ptrIDelegate);
+		}
+	}
+private:
+	list<IDelegateMultiParameters<ReturnType, parameters...>*>m_list;
+};
