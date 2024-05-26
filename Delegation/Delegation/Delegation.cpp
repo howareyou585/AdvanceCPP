@@ -77,6 +77,7 @@ int main()
 
 	//4.有参数版
 	
+
 	CCommonDelegateMultiParameters<int, int, int> c(add);
 	int ret = c.invoke(10,20);
 	cout << "10+20=" << ret << endl;
@@ -90,8 +91,16 @@ int main()
 	using memberFuncPointer = int(MyClass::*)(int, int);
 	memberFuncPointer ptrx = &MyClass::add;
 	
-	CMemberFuctionDelegateMultiParameters<int, MyClass, int, int> cc(mc, ptrx);
+	CMemberFuctionDelegateMultiParameters<int, MyClass, int, int> cc(&mc, ptrx);
 	cout << "23+96=" << cc.invoke(23, 96) << endl;
+
+	/*MyClass* ptrMc = new MyClass();
+	auto ptrCommonFuncDelegate = CreateDelegateWithMultiParamters<int, int, int>(add);
+	auto ptrMemberFuncDelegate = CreateDelegateWithMultiParamters<int, MyClass, int, int>(ptrMc, &MyClass::add);
+	CMultiDelegateMultiParameters<int,int,int> cdmp;
+	cdmp += ptrCommonFuncDelegate;
+	cdmp += ptrMemberFuncDelegate;
+	cdmp(20,965);*/
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
